@@ -1,0 +1,66 @@
+<resources>
+    <string name="app_name">CASF</string>
+    <string name="action_settings">Settings</string>
+    <string name="ingresar">Ingresar</string>
+    <string name="contrasena">Contraseña</string>
+    <string name="usuario">Usuario</string>
+    <string name="user">Usuario:</string>
+    <string name="carga">Carga de Universos</string>
+    <string name="cargar">Cargar</string>
+    <string name="busqueda">Búsqueda</string>
+    <string name="registrolectura">Registro de Lectura</string>
+    <string name="confirmar_lectura">Confirmar Lectura</string>
+    <string name="datos">FT0000002	Folio:	033\nAnabel Sosa Sosa \nJuan Esquivel 18 \nMedidor: 787465</string>
+    <string name="registrar">Registrar</string>
+    <string name="registro_de_gps">Registro de GPS</string>
+    <string name="longitud">Longitud</string>
+    <string name="latitud">Latitud</string>
+    <string name="foto_de_medidor">Foto de Medidor</string>
+    <string name="guardar">Guardar</string>
+
+    <string-array name="sector">
+        <item>SECTOR</item>
+        <item>001</item>
+        <item>002</item>
+        <item>003</item>
+        <item>004</item>
+    </string-array>
+    <string-array name="ruta">
+        <item>RUTA</item>
+        <item>01</item>
+        <item>02</item>
+        <item>03</item>
+        <item>04</item>
+    </string-array>
+    <string-array name="inconsistencias">
+        <item>0-CLAVE</item>
+        <item>1-MEDIDOR DESCOMPUESTO</item>
+        <item>2-MEDIDOR DESTRUIDO</item>
+        <item>3-OBSTACULOS</item>
+        <item>4-MEDIDOR INVERTIDO</item>
+        <item>5-SIN MEDIDOR</item>
+        <item>6-SIN SELLOS</item>
+        <item>7-VIDRIO ROTO</item>
+        <item>8-VIDRIO OPACO</item>
+        <item>9-CAMBIO DE CLASIFICACION</item>
+        <item>10-CASA CERRADA</item>
+        <item>11-SIN USO</item>
+        <item>12-FUGA EN MEDIDOR</item>
+        <item>13-URGE SACAR MEDIDOR</item>
+        <item>14-TERRENO BALDIO</item>
+        <item>15-NO PERMITIERON PASAR</item>
+        <item>16-MEDIDOR DESCONECTADO</item>
+        <item>17-MEDIDOR SIN MANECILLAS</item>
+        <item>18-TOMA LIMITADA</item>
+        <item>19-DESHABITADO</item>
+        <item>20-TOMA CANCELADA</item>
+        <item>21-CAMBIO DE MEDIDOR</item>
+        <item>22-ABC</item>
+        <item>23-MEDIDOR NUEVO</item>
+        <item>24-CARATULA PINTADA O RAYADA</item>
+        <item>25-FUGA EN LA CALLE</item>
+    </string-array>
+
+
+
+</resources>
