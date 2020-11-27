@@ -1,0 +1,65 @@
+<resources>
+    <string name="app_name">CapturaElec</string>
+    <string name="title_activity_main">Capturar</string>
+    <string name="action_settings">Salir</string>
+    <string name="ok">OK</string>
+    <string name="permission_camera_rationale">Acceso a la cámara es necesario para la detección</string>
+    <string name="no_camera_permission">This application cannot run because it does not have the camera permission.  The application will now exit.</string>
+    <string name="low_storage_error">OCR dependencies no podra descargar due to low device storage</string>
+    <string name="read_text">Detectar Texto</string>
+    <string name="auto_focus">Auto Focus</string>
+    <string name="use_flash">Use Flash</string>
+    <string name="ocr_success">Lectura de texto completo</string>
+    <string name="ocr_failure">Texto no capturado</string>
+    <string name="ocr_error">"Error al leer el texto: %1$s"</string>
+    <string name="usuario">Usuario</string>
+    <string name="contrasena">Contraseña</string>
+    <string name="actualizar">Actualizar</string>
+    <string name="seccion">Sección</string>
+    <string name="guardar">Guardar</string>
+    <string name="clave_ine">Clave INE</string>
+    <string name="localidad">Localidad</string>
+    <string name="municipio">Municipio</string>
+    <string name="estado">Estado</string>
+    <string name="domicilio">Domicilio</string>
+    <string name="nombre">Nombre</string>
+    <string name="materno">Materno</string>
+    <string name="paterno">Paterno</string>
+    <string name="domicilio_actual">Domicilio actual</string>
+    <string name="telefono">Teléfono</string>
+    <string name="correo">Correo</string>
+    <string name="confirmar">Confirmar</string>
+    <string name="veracruz">Veracruz</string>
+    <string name="playa">Playa Vicente</string>
+    <string name="carga_de_universos">Carga de universos</string>
+    <string name="cargar">Cargar</string>
+    <string name="universos">universos</string>
+    <string name="regresar">Regresar</string>
+    <string name="buscar">Buscar</string>
+    <string name="colonia">Colonia</string>
+    <string name="ocupacion">Ocupación</string>
+    <string name="curp">CURP</string>
+    <string name="emision">Emisión</string>
+    <string name="twitter">Twitter</string>
+    <string name="facebook">Facebook</string>
+    <string name="vigencia">Vigencia</string>
+    <string name="Inicio">Inicio</string>
+    <string name="iniciar_sesion">Iniciar sesión</string>
+    <string name="version">Hay una nueva versión \n click para descargarla la versión  \n</string>
+    <string name="descargar">Descargar</string>
+    <string-array name="sexo">
+        <item>SEXO</item>
+        <item>FEMENINO</item>
+        <item>MASCULINO</item>
+    </string-array>
+    <string-array name="escolaridad">
+        <item>ESCOLARIDAD</item>
+        <item>1-SIN ESCOLARIDAD</item>
+        <item>2-PRIMARIA</item>
+        <item>3-SECUNDARIA</item>
+        <item>4-PREPARATORIA</item>
+        <item>5-LICENCIATURA</item>
+        <item>6-POSTGRADO</item>
+        <item>7-TECNICA</item>
+    </string-array>
+</resources>

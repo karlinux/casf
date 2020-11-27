@@ -1,148 +1,142 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.aulaxalapa.casf">
+    package="mx.com.aulaxalapa.capturaelec">
 
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
     <application
-        android:name="com.aulaxalapa.casf.common.MyApp"
+        android:name=".common.MyApp"
         android:allowBackup="true"
-        android:icon="@drawable/gota"
-        android:label="@string/app_name"
+        android:icon="@mipmap/ic_launcher"
         android:requestLegacyExternalStorage = "true"
-        android:roundIcon="@drawable/gota"
-        android:supportsRtl="true"
+        android:label="@string/app_name"
         android:largeHeap="true"
-        android:theme="@style/AppTheme"
-        tools:ignore="GoogleAppIndexingWarning">
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.aulaxalapa.casf.provider"
+            android:authorities="mx.com.aulaxalapa.capturaelec.provider"
             android:exported="false"
             android:grantUriPermissions="true">
-
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths"/>
         </provider>
+        <meta-data
+            android:name="com.google.android.gms.vision.DEPENDENCIES"
+            android:value="ocr" />
         <activity
-            android:name="com.aulaxalapa.casf.MainActivity"
-            android:label="@string/app_name"
+            android:name="mx.com.aulaxalapa.capturaelec.Logincaptura"
+            android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name="com.aulaxalapa.casf.UniversosCasf"
-            android:label="@string/app_name"
+            android:name="mx.com.aulaxalapa.capturaelec.InicioCaptura"
+            android:label="@string/Inicio"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait">
             <intent-filter>
-                <action android:name=".UniversosCasf" />
-
+                <action android:name=".InicioCaptura" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
-            android:name="com.aulaxalapa.casf.BuscarCasf"
-            android:label="@string/app_name"
+            android:name="mx.com.aulaxalapa.capturaelec.BuscarOcr"
+            android:label="@string/buscar"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait">
             <intent-filter>
-                <action android:name=".BuscarCasf" />
-
+                <action android:name=".BuscarOcr" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
-            android:name="com.aulaxalapa.casf.GpsCasf"
-            android:label="@string/app_name"
+            android:name="mx.com.aulaxalapa.capturaelec.GpsOcr"
+            android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait">
             <intent-filter>
-                <action android:name=".GpsCasf" />
-
+                <action android:name="mx.com.aulaxalapa.capturaelec.GpsOcr" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
-            android:name="com.aulaxalapa.casf.LecturaCasf"
-            android:label="@string/app_name"
+            android:name="mx.com.aulaxalapa.capturaelec.Versioncaptura"
+            android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait">
             <intent-filter>
-                <action android:name=".LecturaCasf" />
-
+                <action android:name="mx.com.aulaxalapa.capturaelec.Versioncaptura" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
-            android:name="com.aulaxalapa.casf.SincronizarCasf"
-            android:label="@string/app_name"
+            android:name="mx.com.aulaxalapa.capturaelec.Datos"
+            android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait">
             <intent-filter>
-                <action android:name=".SincronizarCasf" />
-
+                <action android:name="mx.com.aulaxalapa.capturaelec.Datos" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
-            android:name="com.aulaxalapa.casf.FotoMedidorCasf"
-            android:label="@string/app_name"
+            android:name="mx.com.aulaxalapa.capturaelec.Editarcaptura"
+            android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait">
             <intent-filter>
-                <action android:name=".FotoMedidorCasf" />
-
+                <action android:name="mx.com.aulaxalapa.capturaelec.Editarcaptura" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity> <activity
+            android:name="mx.com.aulaxalapa.capturaelec.UniversosOcr"
+            android:label="@string/title_activity_main"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="mx.com.aulaxalapa.capturaelec.UniversosOcr" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
-            android:name="com.aulaxalapa.casf.FotoIncoCasf"
-            android:label="@string/app_name"
+            android:name="mx.com.aulaxalapa.capturaelec.Fotocapturaanterior"
+            android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait">
             <intent-filter>
-                <action android:name=".FotoIncoCasf" />
-
+                <action android:name="mx.com.aulaxalapa.capturaelec.Fotocapturaanterior" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
-            android:name="com.aulaxalapa.casf.FotoInconsistenciaCasf"
-            android:label="@string/app_name"
+            android:name="mx.com.aulaxalapa.capturaelec.RegistroCaptura"
+            android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait">
             <intent-filter>
-                <action android:name=".FotoInconsistenciaCasf" />
-
+                <action android:name="mx.com.aulaxalapa.capturaelec.RegistroCaptura" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity
-        android:name="com.aulaxalapa.casf.InconsistenciaCasf"
-        android:label="@string/app_name"
-        android:theme="@style/AppTheme.NoActionBar"
-        android:screenOrientation="portrait">
-        <intent-filter>
-            <action android:name=".InconsistenciaCasf" />
-
-            <category android:name="android.intent.category.DEFAULT" />
-        </intent-filter>
-    </activity>
+        <activity android:name="mx.com.aulaxalapa.capturaelec.OcrCaptureActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:label="Read Text" />
         <service
-            android:name="com.aulaxalapa.casf.ServicioCasf"
+            android:name=".Serviciocaptura"
             android:enabled="true" />
     </application>
 

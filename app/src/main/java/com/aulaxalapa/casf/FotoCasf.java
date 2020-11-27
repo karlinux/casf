@@ -200,9 +200,7 @@ public class FotoCasf extends AppCompatActivity {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         //Uri output = Uri.fromFile(new File(foto));
         Uri output = null;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
-            output = FileProvider.getUriForFile(getApplicationContext(),getApplicationContext().getOpPackageName() + ".provider", new File(pic));
-        }
+
         intent.putExtra(MediaStore.EXTRA_OUTPUT, output);
         startActivityForResult(intent, 1);
     }
@@ -221,11 +219,7 @@ public class FotoCasf extends AppCompatActivity {
             // Continue only if the File was successfully created
             if (photoFile != null) {
                 Uri photoURI = null;
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
-                    photoURI = FileProvider.getUriForFile(this,
-                            getApplicationContext().getOpPackageName() + ".provider",
-                            photoFile);
-                }
+
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                 startActivityForResult(takePictureIntent, 1);
             }

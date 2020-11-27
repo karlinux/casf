@@ -2,7 +2,6 @@ package com.aulaxalapa.casf.common;
 
 public class Constantes {
 
-    //public static final String API_RUTA_BASE_URL = "https://casf.tecniso.mx/";
     public static final String API_RUTA_BASE_URL = "https://tecnisoserver.com/";
 
     //preferencias

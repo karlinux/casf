@@ -79,16 +79,16 @@ public class UniversosCasf extends AppCompatActivity {
         btnIniciar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                spinner.setVisibility(View.VISIBLE);
+            spinner.setVisibility(View.VISIBLE);
 
-                btnIniciar.setVisibility(View.GONE);
-                btnRegresar.setVisibility(View.GONE);
+            btnIniciar.setVisibility(View.GONE);
+            btnRegresar.setVisibility(View.GONE);
 
-                base.abrir();
-                base.eliminarTabla();
-                base.crearTabla();
-                base.cerrar();
-                goUniversos( selecRuta, selecSector );
+            base.abrir();
+            base.eliminarTabla();
+            base.crearTabla();
+            base.cerrar();
+            goUniversos( selecRuta, selecSector );
 
             }
         });
@@ -112,24 +112,28 @@ public class UniversosCasf extends AppCompatActivity {
 
                 if( response.isSuccessful()){
                     universoLista = response.body();
-                    for (int i=0; i < universoLista.size(); i++) {
-                        base.abrir();
-                        base.insertarRegistro(
-                                universoLista.get(i).getFolioCont(),universoLista.get(i).getPaterno(),universoLista.get(i).getMaterno(),
-                                universoLista.get(i).getNombre(),universoLista.get(i).getCalle(),universoLista.get(i).getNumExt(),
-                                universoLista.get(i).getSector(), universoLista.get(i).getRuta(), universoLista.get(i).getFolioReparto(),
-                                universoLista.get(i).getColonia(), universoLista.get(i).getIdMedidor(), universoLista.get(i).getMedidor(),
-                                universoLista.get(i).getDiametro(), universoLista.get(i).getMarca(), universoLista.get(i).getLectAnt(),
-                                universoLista.get(i).getAnio(), universoLista.get(i).getPeriodo()
-                        );
+                    if(universoLista != null) {
+                        for (int i = 0; i < universoLista.size(); i++) {
+                            base.abrir();
+                            base.insertarRegistro(
+                                    universoLista.get(i).getFolioCont(), universoLista.get(i).getPaterno(), universoLista.get(i).getMaterno(),
+                                    universoLista.get(i).getNombre(), universoLista.get(i).getCalle(), universoLista.get(i).getNumExt(),
+                                    universoLista.get(i).getSector(), universoLista.get(i).getRuta(), universoLista.get(i).getFolioReparto(),
+                                    universoLista.get(i).getColonia(), universoLista.get(i).getIdMedidor(), universoLista.get(i).getMedidor(),
+                                    universoLista.get(i).getDiametro(), universoLista.get(i).getMarca(), universoLista.get(i).getLectAnt(),
+                                    universoLista.get(i).getAnio(), universoLista.get(i).getPeriodo()
+                            );
+                            spinner.setVisibility(View.GONE);
+                            btnIniciar.setVisibility(View.VISIBLE);
+                            btnRegresar.setVisibility(View.VISIBLE);
+                            base.cerrar();
+                        }
+                        SharedPreferencesManager.setSomeBooleanValue(Constantes.PREF_CARGA, false);
+                        SharedPreferencesManager.setSomeStringValue(Constantes.PREF_DIA, dia);
+                    }else{
+                        Toast.makeText(UniversosCasf.this, "No existen datos con esa configuración", Toast.LENGTH_SHORT).show();
                         spinner.setVisibility(View.GONE);
-                        btnIniciar.setVisibility(View.VISIBLE);
-                        btnRegresar.setVisibility(View.VISIBLE);
-                        base.cerrar();
                     }
-                    SharedPreferencesManager.setSomeBooleanValue(Constantes.PREF_CARGA, false);
-                    SharedPreferencesManager.setSomeStringValue(Constantes.PREF_DIA, dia);
-
                 }else{
                     Toast.makeText(MyApp.getContext(), "Error al cargar universos" + response.toString(), Toast.LENGTH_SHORT).show();
                 }
@@ -191,7 +195,6 @@ public class UniversosCasf extends AppCompatActivity {
                 selecSector = String.valueOf(spSector.getSelectedItem());
                 obtenerRutas( selecSector );
             }
-
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });

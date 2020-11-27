@@ -72,7 +72,6 @@ public class SincronizarCasf extends AppCompatActivity {
 
         if (conectadoWifi()) {
             Cursor c = base.getEnvio("1");
-
             Log.e(TAG, "onCreate: " + c.getCount() );
             count = c.getCount();
             if(count > 0){
@@ -169,14 +168,14 @@ public class SincronizarCasf extends AppCompatActivity {
                     }
                 }else {
                     Toast.makeText(MyApp.getContext(), "Hubo problemas para conectarse a internet", Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "onResponse: " +response.toString() );
+                    Log.e(TAG, "onResponse: " +response.message());
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseInsert> call, Throwable t) {
-                Toast.makeText(MyApp.getContext(), "Error en la conexión"+ t.getMessage(), Toast.LENGTH_SHORT).show();
-                Log.e(TAG, "onFailure: " + t.getMessage() );
+                Toast.makeText(MyApp.getContext(), "Error en la conexión", Toast.LENGTH_SHORT).show();
+                Log.e(TAG, "onFailureaqui: " + t.getCause() );
             }
         });
     }
