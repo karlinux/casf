@@ -28,7 +28,6 @@ import androidx.core.content.FileProvider;
 import com.aulaxalapa.casf.common.Constantes;
 import com.aulaxalapa.casf.common.SharedPreferencesManager;
 import com.aulaxalapa.casf.data.Handler_sqlite;
-import com.aulaxalapa.casf.R;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -158,7 +157,7 @@ public class FotoInconsistenciaCasf extends AppCompatActivity {
             }
         });
 
-        btnGuardar = findViewById(R.id.btnRegresar);
+        btnGuardar = findViewById(R.id.btnCargar);
 
         btnGuardar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -179,6 +178,7 @@ public class FotoInconsistenciaCasf extends AppCompatActivity {
                             base.setEstado(_ID);
                             break;
                     }
+                    base.insertarImagen(imeistring+guardado+".jpg", guardado);
                     Intent intent = new Intent(getApplicationContext(), InconsistenciaCasf.class);
                     startActivity(intent);
                     finish();

@@ -12,6 +12,12 @@ public class RequestUniverso {
     @SerializedName("sector")
     @Expose
     private String sector;
+    @SerializedName("delFolio")
+    @Expose
+    private int delFolio;
+    @SerializedName("alFolio")
+    @Expose
+    private int alFolio;
 
     /**
      * No args constructor for use in serialization
@@ -20,11 +26,11 @@ public class RequestUniverso {
     public RequestUniverso() {
     }
 
-    public RequestUniverso(String ruta, String sector) {
-        super();
-
+    public RequestUniverso(String ruta, String sector, int delFolio, int alFolio) {
         this.ruta = ruta;
         this.sector = sector;
+        this.delFolio = delFolio;
+        this.alFolio = alFolio;
     }
 
     public String getRuta() {
@@ -41,5 +47,21 @@ public class RequestUniverso {
 
     public void setSector(String sector) {
         this.sector = sector;
+    }
+
+    public int getDelFolio() {
+        return delFolio;
+    }
+
+    public void setDelFolio(int delFolio) {
+        this.delFolio = delFolio;
+    }
+
+    public int getAlFolio() {
+        return alFolio;
+    }
+
+    public void setAlFolio(int alFolio) {
+        this.alFolio = alFolio;
     }
 }

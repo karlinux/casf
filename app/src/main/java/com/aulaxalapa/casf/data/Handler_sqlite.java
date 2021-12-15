@@ -20,6 +20,12 @@ public class Handler_sqlite extends SQLiteOpenHelper {
 			;
 	private String SQLUpdateV2 = "ALTER TABLE " + Constantes.CASF + " ADD COLUMN " + Constantes.MES + " text";
 	private String SQLUpdateV4 = "ALTER TABLE " + Constantes.CASF + " ADD COLUMN " + Constantes.ANIO + " text";
+	private String queryUniversos = "SELECT U."+ _ID+ ", U." + Constantes.FOLIOCONT+ ", " + Constantes.PATERNO+ ", " + Constantes.MATERNO+ ", " +
+			Constantes.NOMBRE+ ", " + Constantes.CALLE+ ", " + Constantes.NUM_EXT+ ", " + Constantes.SECTOR+ ", " +
+			Constantes.RUTA+ ", " + Constantes.FOLIOREPARTO+ ", " + Constantes.COLONIA+ ", " + Constantes.IDMEDIDOR+ ", " +
+			Constantes.MEDIDOR+ ", " + Constantes.DIAMETRO+ ", " + Constantes.MARCA + ", " + Constantes.LECTANT+ ", " +
+			Constantes.ESTATUS + ", C." +
+			_ID+ ", "+Constantes.FECHA+" FROM UNIVERSOS U LEFT JOIN CASF C ON U.FOLIOCONT = C.FOLIOCONT AND  U.MES = C.MES AND  U.ANIO = C.ANIO";
 
 	public Handler_sqlite(Context ctx) {
 		super(ctx, "mibase", null, 2);
@@ -130,9 +136,21 @@ public class Handler_sqlite extends SQLiteOpenHelper {
 		}
 	}
 
+	public void insertarImagen( String imagen, String idimagen)
+	{
+		ContentValues valores = new ContentValues();
+
+		valores.put(Constantes.IMAGEN, imagen);
+		valores.put(Constantes.IDIMAGEN, idimagen);
+
+		if ( (imagen != null) && (!imagen.equals("")) ) {
+			this.getWritableDatabase().insert(Constantes.IMAGENES, null, valores);
+		}
+	}
+
 	public void insertarRegistro(String folioCont, String paterno, String materno, String nombre, String calle,
-                               String numExt, String sector, String ruta, String folioReparto, String colonia,
-                               String idMedidor, String medidor, String diametro, String marca, String lectAnt, String anio, String periodo)
+								 String numExt, String sector, String ruta, String folioReparto, String colonia,
+								 String idMedidor, String medidor, String diametro, String marca, String lectAnt, String anio, String periodo)
 	{
 		ContentValues valores = new ContentValues();
 
@@ -191,9 +209,19 @@ public class Handler_sqlite extends SQLiteOpenHelper {
 		this.getWritableDatabase().delete( Constantes.UNIVERSOS, _ID + "=?", new String[] {id} );
 	}
 
+	public Cursor getImagenes( String ide){
+		String columnas[] = { Constantes.IMAGEN, Constantes.IDIMAGEN };
+		String[] ident= { ide };
+		Cursor c = this.getReadableDatabase().query(Constantes.IMAGENES, columnas, Constantes.ESTATUS + "=?", ident, null, null, null, null);
+		return c;
+	}
+
 	public void  eliminarTabla(){
 		this.getWritableDatabase().execSQL("DROP TABLE IF EXISTS "+ Constantes.UNIVERSOS);
+	}
 
+	public void  eliminarCampo(String id){
+		this.getWritableDatabase().execSQL("DELETE FROM "+Constantes.IMAGENES + " WHERE _ID = " + id);
 	}
 
 	public void  crearTabla(){
@@ -227,7 +255,7 @@ public class Handler_sqlite extends SQLiteOpenHelper {
 				Constantes.LECTANT+ ", C." +
 				Constantes.ESTATUS +
 				" FROM UNIVERSOS U LEFT JOIN CASF C ON U.FOLIOCONT = C.FOLIOCONT ";
-		Log.e(TAG, "getRegistros: Registros query 2 " + query );
+		//Log.e(TAG, "getRegistros: Registros query 2 " + query );
 		Cursor c = this.getWritableDatabase().rawQuery(query, null);
 		return c;
 	}
@@ -239,35 +267,43 @@ public class Handler_sqlite extends SQLiteOpenHelper {
 		Cursor c = this.getWritableDatabase().rawQuery(query, null);
 		return c;
 	}
+
 	public Cursor getUniversos( String datos){
 		String[] ident= {"%" + datos, "%" + datos};
-		String query = "SELECT U."+ _ID+ ", U." + Constantes.FOLIOCONT+ ", " + Constantes.PATERNO+ ", " + Constantes.MATERNO+ ", " +
-		Constantes.NOMBRE+ ", " + Constantes.CALLE+ ", " + Constantes.NUM_EXT+ ", " + Constantes.SECTOR+ ", " +
-		Constantes.RUTA+ ", " + Constantes.FOLIOREPARTO+ ", " + Constantes.COLONIA+ ", " + Constantes.IDMEDIDOR+ ", " +
-		Constantes.MEDIDOR+ ", " + Constantes.DIAMETRO+ ", " + Constantes.MARCA+ ", " + Constantes.LECTANT+ ", " + Constantes.ESTATUS + ", C." +
-				_ID+
-				" FROM UNIVERSOS U LEFT JOIN CASF C ON U.FOLIOCONT = C.FOLIOCONT AND  U.MES = C.MES AND  U.ANIO = C.ANIO "+
-				 " WHERE PATERNO LIKE '"+datos+"%';";
+		String query = queryUniversos +
+				" WHERE PATERNO LIKE '%"+ datos +"%' or MATERNO LIKE '%" +datos +"%' or  NOMBRE LIKE '%"+ datos +"%' or  FOLIOREPARTO LIKE '%"+datos+"%' or " +
+				Constantes.MEDIDOR + " LIKE '%"+datos+"%' or U." + Constantes.FOLIOCONT + " LIKE '%"+ datos +"%' ORDER BY "+ Constantes.ESTATUS + " ASC";
 		Cursor c = this.getWritableDatabase().rawQuery(query, null);
 		return c;
 	}
 
 	public Cursor getUniversos( ){
-		String query = "SELECT U."+ _ID+ ", U." + Constantes.FOLIOCONT+ ", " + Constantes.PATERNO+ ", " + Constantes.MATERNO+ ", " +
-			Constantes.NOMBRE+ ", " + Constantes.CALLE+ ", " + Constantes.NUM_EXT+ ", " + Constantes.SECTOR+ ", " +
-			Constantes.RUTA+ ", " + Constantes.FOLIOREPARTO+ ", " + Constantes.COLONIA+ ", " + Constantes.IDMEDIDOR+ ", " +
-			Constantes.MEDIDOR+ ", " + Constantes.DIAMETRO+ ", " + Constantes.MARCA + ", " + Constantes.LECTANT+ ", " +
-				Constantes.ESTATUS + ", C." + _ID+
-			" FROM UNIVERSOS U LEFT JOIN CASF C ON U.FOLIOCONT = C.FOLIOCONT AND  U.MES = C.MES AND  U.ANIO = C.ANIO ";
+		String query = queryUniversos + " ORDER BY "+Constantes.ESTATUS + " ASC";
 		Cursor c = this.getWritableDatabase().rawQuery(query, null);
 		return c;
 	}
 
 	public Cursor getDatos( String id){
-		String columnas[] = { _ID , Constantes.FOLIOCONT, Constantes.PATERNO, Constantes.MATERNO, Constantes.NOMBRE, Constantes.CALLE,
-				Constantes.NUM_EXT, Constantes.SECTOR, Constantes.RUTA, Constantes.FOLIOREPARTO, Constantes.COLONIA,
-				Constantes.IDMEDIDOR, Constantes.MEDIDOR, Constantes.DIAMETRO, Constantes.MARCA, Constantes.LECTANT,
-				Constantes.MES, Constantes.ANIO};
+		String columnas[] = {
+				_ID , 		// 0
+				Constantes.FOLIOCONT,		// 1
+				Constantes.PATERNO,		// 2
+				Constantes.MATERNO,		// 3
+				Constantes.NOMBRE,		// 4
+				Constantes.CALLE,		// 5
+				Constantes.NUM_EXT,		// 6
+				Constantes.SECTOR,		// 7
+				Constantes.RUTA,		// 8
+				Constantes.FOLIOREPARTO,// 9
+				Constantes.COLONIA,		// 10
+				Constantes.IDMEDIDOR,	// 11
+				Constantes.MEDIDOR,		// 12
+				Constantes.DIAMETRO,	// 13
+				Constantes.MARCA,		// 14
+				Constantes.LECTANT,		// 15
+				Constantes.MES,			// 16
+				Constantes.ANIO			// 17
+		};
 		String[] ident= {id};
 
 		Cursor c = this.getReadableDatabase().query(Constantes.UNIVERSOS, columnas, "_ID=?", ident, null, null, null);

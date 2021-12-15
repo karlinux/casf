@@ -23,6 +23,12 @@ public class SharedPreferencesManager {
 
     }
 
+    public static String getSomeStringValue( String dataLabel){
+
+        return getSharedPreferences().getString(dataLabel, null);
+
+    }
+
     public static void setSomeBooleanValue(String dataLabel, boolean dataValue){
 
         SharedPreferences.Editor editor = getSharedPreferences().edit();
@@ -31,15 +37,23 @@ public class SharedPreferencesManager {
 
     }
 
-    public static String getSomeStringValue( String dataLabel){
-
-        return getSharedPreferences().getString(dataLabel, null);
-
-    }
-
     public static boolean getSomeBooleanValue(String dataLabel){
 
         return getSharedPreferences().getBoolean(dataLabel, false);
+
+    }
+
+    public static void setSomeIntValue(String dataLabel, int dataValue){
+
+        SharedPreferences.Editor editor = getSharedPreferences().edit();
+        editor.putInt(dataLabel, dataValue);
+        editor.commit();
+
+    }
+
+    public static int getSomeIntValue( String dataLabel){
+
+        return getSharedPreferences().getInt(dataLabel, 0);
 
     }
 

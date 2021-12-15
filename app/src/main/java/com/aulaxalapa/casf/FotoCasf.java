@@ -19,14 +19,12 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.content.FileProvider;
 
 import com.aulaxalapa.casf.common.Constantes;
 import com.aulaxalapa.casf.common.SharedPreferencesManager;
 import com.aulaxalapa.casf.data.Handler_sqlite;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.aulaxalapa.casf.R;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -67,7 +65,7 @@ public class FotoCasf extends AppCompatActivity {
         _ID = base.getId("2");
         base.cerrar();
 
-        imgBtnIniciar = findViewById(R.id.btnRegresar);
+        imgBtnIniciar = findViewById(R.id.btnCargar);
         imgBtnFoto = findViewById(R.id.imgBtnFoto);
         tvUsuario = findViewById(R.id.tvUsuario);
         String usuario = SharedPreferencesManager.getSomeStringValue(Constantes.PREF_NOMBRE);

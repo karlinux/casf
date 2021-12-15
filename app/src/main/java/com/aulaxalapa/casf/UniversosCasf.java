@@ -1,12 +1,12 @@
 package com.aulaxalapa.casf;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -25,12 +25,15 @@ import com.aulaxalapa.casf.retrofit.response.ResponseRuta;
 import com.aulaxalapa.casf.retrofit.response.ResponseSector;
 import com.aulaxalapa.casf.retrofit.request.RequestUniverso;
 import com.aulaxalapa.casf.retrofit.response.ResponseUniverso;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputEditText;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import dmax.dialog.SpotsDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -38,16 +41,18 @@ import retrofit2.Response;
 public class UniversosCasf extends AppCompatActivity {
 
     private Spinner spSector, spRuta;
-    private String selecSector, selecRuta, dia;
+    private String selecSector, selecRuta, dia, selecNum;
     private TextView tvUsuario;
     CasfService casfService;
     CasfClient casfClient;
+    private TextInputEditText etDelFolio, etAlFolio;
     List<ResponseUniverso> universoLista;
     Handler_sqlite base;
-    private Button btnIniciar, btnRegresar;
-    private ProgressBar spinner;
+    private MaterialButton btnIniciar, btnRegresar;
+    private AlertDialog alertDialog;
     private String TAG = "UniversosCasf";
     private boolean verdadero = false;
+    private ProgressBar spinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,38 +62,55 @@ public class UniversosCasf extends AppCompatActivity {
         casfClient = casfClient.getInstance();
         casfService = casfClient.getService();
 
-        spinner = findViewById(R.id.progreso);
 
         spSector = findViewById(R.id.spSector);
         spRuta = findViewById(R.id.spInconsistencia);
-        tvUsuario = findViewById(R.id.tvUsuario);
 
+        etDelFolio = findViewById(R.id.etDelFolio);
+        etAlFolio = findViewById(R.id.etAlFolio);
+        tvUsuario = findViewById(R.id.tvUsuario);
+        spinner = findViewById(R.id.progreso);
         spinner.setVisibility(View.GONE);
+
+        alertDialog = new SpotsDialog.Builder().setContext(UniversosCasf.this).setMessage("Buscando").build();
+
         String usuario = SharedPreferencesManager.getSomeStringValue(Constantes.PREF_NOMBRE);
         tvUsuario.setText(usuario);
 
         obtenerSectores( );
 
-        btnIniciar = findViewById(R.id.btnRegresar);
-        btnRegresar = findViewById(R.id.btnFinalizar);
+        btnIniciar = findViewById(R.id.btnCargar);
+        btnRegresar = findViewById(R.id.btnRegresar);
 
         Date fechaActual = new Date();
         SimpleDateFormat d = new SimpleDateFormat("dd");
         dia = d.format(fechaActual);
+        base.abrir();
+        base.eliminarTabla();
+        base.crearTabla();
+        base.cerrar();
 
         btnIniciar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            spinner.setVisibility(View.VISIBLE);
-
+            //spinner.setVisibility(View.VISIBLE);
+            alertDialog.show();
             btnIniciar.setVisibility(View.GONE);
             btnRegresar.setVisibility(View.GONE);
+                int dFolio;
+                int aFolio;
+            if(etDelFolio.getText().toString().equals("")){
+                dFolio = 0;
+            }else {
+                dFolio = Integer.parseInt(etDelFolio.getText().toString());
+            }
+            if(etAlFolio.getText().toString().equals("")){
+                aFolio = 0;
+            }else {
+                aFolio = Integer.parseInt(etAlFolio.getText().toString());
+            }
 
-            base.abrir();
-            base.eliminarTabla();
-            base.crearTabla();
-            base.cerrar();
-            goUniversos( selecRuta, selecSector );
+            goUniversos( selecRuta, selecSector,  dFolio, aFolio);
 
             }
         });
@@ -96,15 +118,15 @@ public class UniversosCasf extends AppCompatActivity {
         btnRegresar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), BuscarCasf.class);
+                Intent intent = new Intent(getApplicationContext(), InicioCasf.class);
                 startActivity(intent);
                 finish();
             }
         });
     }
 
-    public void goUniversos( String ruta, String sector ){
-        RequestUniverso requestUniverso = new RequestUniverso( ruta, sector );
+    public void goUniversos( String ruta, String sector, int delFolio, int alFolio ){
+        RequestUniverso requestUniverso = new RequestUniverso( ruta, sector, delFolio, alFolio);
         Call<List<ResponseUniverso>> call = casfService.obtenerUniversos(requestUniverso);
         call.enqueue(new Callback<List<ResponseUniverso>>() {
             @Override
@@ -123,16 +145,17 @@ public class UniversosCasf extends AppCompatActivity {
                                     universoLista.get(i).getDiametro(), universoLista.get(i).getMarca(), universoLista.get(i).getLectAnt(),
                                     universoLista.get(i).getAnio(), universoLista.get(i).getPeriodo()
                             );
-                            spinner.setVisibility(View.GONE);
+
                             btnIniciar.setVisibility(View.VISIBLE);
                             btnRegresar.setVisibility(View.VISIBLE);
                             base.cerrar();
                         }
                         SharedPreferencesManager.setSomeBooleanValue(Constantes.PREF_CARGA, false);
                         SharedPreferencesManager.setSomeStringValue(Constantes.PREF_DIA, dia);
+                        alertDialog.dismiss();
                     }else{
                         Toast.makeText(UniversosCasf.this, "No existen datos con esa configuración", Toast.LENGTH_SHORT).show();
-                        spinner.setVisibility(View.GONE);
+                        alertDialog.dismiss();
                     }
                 }else{
                     Toast.makeText(MyApp.getContext(), "Error al cargar universos" + response.toString(), Toast.LENGTH_SHORT).show();
@@ -143,7 +166,7 @@ public class UniversosCasf extends AppCompatActivity {
             @Override
             public void onFailure(Call<List<ResponseUniverso>> call, Throwable t) {
                 Toast.makeText(UniversosCasf.this, "No se pudieron descargar los datos del servidor", Toast.LENGTH_SHORT).show();
-                spinner.setVisibility(View.GONE);
+                alertDialog.dismiss();
                 btnIniciar.setVisibility(View.VISIBLE);
                 btnRegresar.setVisibility(View.VISIBLE);
                 Log.e(TAG, "onFailure: " + t.getMessage() );
@@ -157,11 +180,7 @@ public class UniversosCasf extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<ResponseSector>> call, Response<List<ResponseSector>> response) {
                 if( response.isSuccessful()){
-
                     adaptadorSector( response.body() );
-                    //Log.e(TAG, "onResponse: " + response.body() );
-
-
                 }else{
                     Toast.makeText(MyApp.getContext(), "Error al cargar universos" + response.toString(), Toast.LENGTH_SHORT).show();
                 }
@@ -169,7 +188,7 @@ public class UniversosCasf extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<ResponseSector>> call, Throwable t) {
-                Toast.makeText(MyApp.getContext(), "Problemas de conexión intentelo de nuevo", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MyApp.getContext(), "Problemas de conexión intentelo de nuevo sec", Toast.LENGTH_SHORT).show();
                 Log.e(TAG, "onFailure: " + t.toString() );
                 Log.e(TAG, "onFailure: " + t.getMessage() );
             }
@@ -185,8 +204,20 @@ public class UniversosCasf extends AppCompatActivity {
             sectorLista.add(sectorList.get(i).getSector());
         }
 
+       /* spNumRuta.setAdapter(ArrayAdapter.createFromResource(this, R.array.numuni, R.layout.spinner_item));
+
+        spNumRuta.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view,
+                                       int pos, long id) {
+                selecNum = String.valueOf(spNumRuta.getSelectedItem());
+            }
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+
+        });*/
+
         //MySpinnerAdapter myadapter = new MySpinnerAdapter(MyApp.getContext(),  R.layout.spinner_item , sectorLista);
-        ArrayAdapter<String> myadapter = new ArrayAdapter<>(MyApp.getContext(), R.layout.spinner_item, sectorLista);
+        ArrayAdapter<String> myadapter = new ArrayAdapter<>(MyApp.getContext(), R.layout.spinner_itemuni, sectorLista);
         spSector.setAdapter(myadapter);
 
         spSector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -218,7 +249,7 @@ public class UniversosCasf extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<ResponseRuta>> call, Throwable t) {
-                Toast.makeText(MyApp.getContext(), "Problemas de conexión intentelo de nuevo", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(MyApp.getContext(), "Problemas de conexión intentelo de nuevo", Toast.LENGTH_SHORT).show();
                 Log.e(TAG, "onFailure: " + t.toString() );
                 Log.e(TAG, "onFailure: " + t.getMessage() );
             }
@@ -235,7 +266,7 @@ public class UniversosCasf extends AppCompatActivity {
         }
 
         //MySpinnerAdapter myadapter = new MySpinnerAdapter(MyApp.getContext(),  R.layout.spinner_item , sectorLista);
-        ArrayAdapter<String> myadapter = new ArrayAdapter<>(MyApp.getContext(), R.layout.spinner_item, sectorLista);
+        ArrayAdapter<String> myadapter = new ArrayAdapter<>(MyApp.getContext(), R.layout.spinner_itemuni, sectorLista);
         spRuta.setAdapter(myadapter);
 
         spRuta.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

@@ -1,3 +1,7 @@
 <resources>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="stroke_dimen">1dp</dimen>
+    <dimen name="circle_radius">28dp</dimen>
+    <dimen name="margenbtn">40dp</dimen>
+    <dimen name="common_padding_btn">15dp</dimen>
 </resources>

@@ -28,7 +28,6 @@ import androidx.core.content.FileProvider;
 import com.aulaxalapa.casf.common.Constantes;
 import com.aulaxalapa.casf.common.SharedPreferencesManager;
 import com.aulaxalapa.casf.data.Handler_sqlite;
-import com.aulaxalapa.casf.R;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -71,7 +70,13 @@ public class FotoMedidorCasf extends AppCompatActivity {
             }
         }
 
+        File directory = new File(Environment.getExternalStorageDirectory()+ "/" + carpeta);
+        if(directory.exists()){
+            directory.mkdirs();
+        }
+        btnFoto = findViewById(R.id.imgBtnFoto);
         tvDatos = findViewById(R.id.tvDatos);
+
         String id = SharedPreferencesManager.getSomeStringValue(Constantes.PREF_ID);
         base.abrir();
         guardado = base.getGuardado();
@@ -84,23 +89,14 @@ public class FotoMedidorCasf extends AppCompatActivity {
                 " " + c.getString(4) +
                 "\n" + c.getString(5) + " " + c.getString(6) +
                 "\nMedidor: " + c.getString(12));
-        base.getTablas("SELECT * FROM " + Constantes.CASF, "GPS");
-        base.cerrar();
-        //inserta.actualizaGuardado(String.valueOf(nameFoto), String.valueOf(0));
-        base.cerrar();
-
-        File directory = new File(Environment.getExternalStorageDirectory()+ "/" + carpeta);
-        if(directory.exists()){
-            directory.mkdirs();
-        }
-
-        System.gc();
-
-        btnFoto = findViewById(R.id.imgBtnFoto);
-        base.abrir();
+        //base.getTablas("SELECT * FROM " + Constantes.CASF, "GPS");
         _ID = base.getId(guardado);
         fecha = base.fecha( Constantes.CASF, _ID);
         base.cerrar();
+        //inserta.actualizaGuardado(String.valueOf(nameFoto), String.valueOf(0));
+
+        System.gc();
+
         imagen = Environment.getExternalStorageDirectory() + "/"+ carpeta +"/";
         final String imei = SharedPreferencesManager.getSomeStringValue(Constantes.PREF_IDUSU);
 
@@ -155,7 +151,7 @@ public class FotoMedidorCasf extends AppCompatActivity {
             }
         });
 
-        btnGuardar = findViewById(R.id.btnRegresar);
+        btnGuardar = findViewById(R.id.btnCargar);
 
         btnGuardar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -164,6 +160,7 @@ public class FotoMedidorCasf extends AppCompatActivity {
                 base.abrir();
                 if(file.exists()){
                     base.setCampo( _ID, Constantes.FOTOMEDIDOR, imeistring+".jpg", "3");
+                    base.insertarImagen(imeistring+".jpg", "1");
                 }else{
                     base.setCampo( _ID, Constantes.FOTOMEDIDOR, "", "3");
                 }
@@ -225,33 +222,6 @@ public class FotoMedidorCasf extends AppCompatActivity {
         }
     }
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event)
-    {
-        if(keyCode == KeyEvent.KEYCODE_BACK)
-        {
-            Intent int1 = new Intent(getApplicationContext(), GpsCasf.class);
-            startActivity(int1);
-            return true;
-        }else if (keyCode == 139){
-
-            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            dm =  Build.PRODUCT;
-
-            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                Uri output = FileProvider.getUriForFile(getApplicationContext(),
-                        PATH + ".provider", new File(foto));
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, output);
-                startActivityForResult(intent, 1);
-            }else {
-                Uri output = Uri.fromFile(new File(foto));
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, output);
-                startActivityForResult(intent, 1);
-            }
-        }
-        return false;
-    }
-
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         if(requestCode == CAMARA_PERMISSION){
 
@@ -266,15 +236,5 @@ public class FotoMedidorCasf extends AppCompatActivity {
             }
 
         }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        BitmapDrawable bmd = (BitmapDrawable) btnFoto.getDrawable();
-        if(bmd != null){
-            bmd.getBitmap().recycle();
-        }
-        btnFoto.setImageBitmap(null);
     }
 }

@@ -103,21 +103,20 @@
             app:layout_constraintTop_toBottomOf="@+id/tvCasf"
             app:srcCompat="@drawable/medidoragua" />
 
-        <Button
-            android:id="@+id/btnRegresar"
-            android:layout_width="match_parent"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnCargar"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginStart="60dp"
-            android:layout_marginLeft="60dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="60dp"
-            android:layout_marginRight="60dp"
-            android:background="@drawable/borde"
+            android:layout_marginLeft="@dimen/margenbtn"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="@dimen/margenbtn"
+            android:padding="@dimen/common_padding_btn"
             android:text="@string/guardar"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/colorPrimary"
+            app:backgroundTint="@color/colorPrimaryDark"
+            app:cornerRadius="@dimen/circle_radius"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.434"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imgBtnFoto" />
 

@@ -1,5 +1,7 @@
 package com.aulaxalapa.casf.retrofit;
 
+import android.util.Log;
+
 import com.aulaxalapa.casf.common.Constantes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -21,7 +23,6 @@ public class CasfClient {
                 .baseUrl(Constantes.API_RUTA_BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create( gson ))
                 .build();
-
         casfService = retrofit.create( CasfService.class );
     }
 

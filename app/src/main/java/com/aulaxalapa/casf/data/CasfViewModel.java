@@ -25,8 +25,8 @@ public class CasfViewModel extends AndroidViewModel {
         dataRepository.subirGps( id, latitud, longitud);
     }
 
-    public void obtenerUniversos( String ruta, String sector ){
-        dataRepository.obtenerUniversos( ruta, sector );
+    public void obtenerUniversos( String ruta, String sector, int delFolio, int alFolio ){
+        dataRepository.obtenerUniversos( ruta, sector, delFolio, alFolio );
     }
 
     public boolean carga(){

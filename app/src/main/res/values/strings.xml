@@ -4,8 +4,7 @@
     <string name="ingresar">Ingresar</string>
     <string name="contrasena">Contraseña</string>
     <string name="usuario">Usuario</string>
-    <string name="user">Usuario:</string>
-    <string name="carga">Carga de Universos</string>
+    <string name="carga">Descarga de rutas</string>
     <string name="cargar">Cargar</string>
     <string name="busqueda">Búsqueda</string>
     <string name="registrolectura">Registro de Lectura</string>
@@ -17,6 +16,14 @@
     <string name="latitud">Latitud</string>
     <string name="foto_de_medidor">Foto de Medidor</string>
     <string name="guardar">Guardar</string>
+    <string name="regresar">Regresar</string>
+    <string name="siguiente">Siguiente</string>
+    <string name="delfolio">Del folio</string>
+    <string name="alfolio">Al folio</string>
+    <string name="user">V.7 \nUsuario:</string>
+    <string name="titulo">COMISIÓN DE AGUA Y SANEAMIENTO DE FORTÍN \nV.7</string>
+    <string name="dialog_title">Confirmar</string>
+    <string name="carga_de_universos">Universos</string>
 
     <string-array name="sector">
         <item>SECTOR</item>
@@ -59,6 +66,20 @@
         <item>23-MEDIDOR NUEVO</item>
         <item>24-CARATULA PINTADA O RAYADA</item>
         <item>25-FUGA EN LA CALLE</item>
+        <item>26-FUGA EN EL CUADRO</item>
+        <item>27-PERRO SUELTO</item>
+        <item>28-FUGA BANQUETA</item>
+        <item>29-FUGA LLAVE DE PASO</item>
+        <item>30-CAMBIO DE RUTA Y FOLIO</item>
+        <item>31-MEDIDOR SUCIO</item>
+        <item>32-MEDIDOR EN CAJA DE REGISTRO</item>
+        <item>33-AUMENTAR PROMEDIO</item>
+        <item>34-ESCOMBRO</item>
+        <item>35-MEDIDOR EMPOTRADO</item>
+        <item>36-FUGA INTERNA</item>
+        <item>37-ACT. DE LECT. POR CAMBIO LECTURISTA</item>
+        <item>38-ACTUALIZACION DE LECTURA</item>
+        <item>39-LECTURA DADA POR USUARIO</item>
     </string-array>
 
 

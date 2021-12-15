@@ -3,15 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:context="com.aulaxalapa.casf.MainActivity"
-        tools:showIn="@layout/activity_main">
-
+        android:orientation="vertical"
+        android:weightSum="1">
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineV"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
         <LinearLayout
             android:id="@+id/llContenedor"
             android:layout_width="match_parent"
@@ -67,17 +73,31 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="90dp"
             android:layout_marginLeft="90dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="90dp"
             android:layout_marginRight="90dp"
             android:gravity="center_horizontal"
             android:text="@string/carga"
-            android:textSize="28sp"
+            android:textSize="22dp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.502"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/llContenedor" />
+       <!-- <Spinner
+            android:id="@+id/spNumRuta"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="40dp"
+            android:layout_marginRight="40dp"
+            android:background="@drawable/spinnerback"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.502"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etBuscar" />-->
 
         <Spinner
             android:id="@+id/spSector"
@@ -85,7 +105,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
             android:layout_marginLeft="40dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="40dp"
             android:layout_marginRight="40dp"
             android:background="@drawable/spinnerback"
@@ -98,51 +118,116 @@
             android:id="@+id/spInconsistencia"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:layout_marginStart="40dp"
             android:layout_marginLeft="40dp"
-            android:layout_marginTop="40dp"
             android:layout_marginEnd="40dp"
             android:layout_marginRight="40dp"
+            android:layout_marginBottom="20dp"
             android:background="@drawable/spinnerback"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.502"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/spSector" />
 
-        <Button
-            android:id="@+id/btnRegresar"
-            android:layout_width="150dp"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/etDelFolios"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginStart="30dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="40dp"
-            android:background="@drawable/borde"
-            android:text="@string/cargar"
-            android:textColor="#FFFFFF"
-            app:layout_constraintEnd_toStartOf="@+id/btnFinalizar"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+            android:hint="@string/delfolio"
+            android:textColorHint="@color/colorPrimaryDark"
+            app:boxCornerRadiusBottomEnd="@dimen/circle_radius"
+            app:boxCornerRadiusBottomStart="@dimen/circle_radius"
+            app:boxCornerRadiusTopEnd="@dimen/circle_radius"
+            app:boxCornerRadiusTopStart="@dimen/circle_radius"
+            app:boxStrokeColor="@color/colorPrimaryDark"
+            app:boxStrokeWidth="@dimen/stroke_dimen"
+            app:endIconMode="clear_text"
+            app:endIconTint="@color/colorPrimaryDark"
+            app:layout_constraintEnd_toEndOf="@id/guidelineV"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/spInconsistencia" />
+            app:layout_constraintTop_toBottomOf="@+id/spInconsistencia">
 
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etDelFolio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:textColor="@color/colorPrimaryDark" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <Button
-            android:id="@+id/btnFinalizar"
-            android:layout_width="150dp"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/etAlFolios"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="41dp"
-            android:layout_marginLeft="41dp"
-            android:layout_marginTop="40dp"
-            android:layout_marginEnd="30dp"
-            android:layout_marginRight="30dp"
-            android:background="@drawable/borde"
-            android:text="Regresar"
-            android:textColor="#FFFFFF"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:hint="@string/alfolio"
+            android:textColorHint="@color/colorPrimaryDark"
+            app:boxCornerRadiusBottomEnd="@dimen/circle_radius"
+            app:boxCornerRadiusBottomStart="@dimen/circle_radius"
+            app:boxCornerRadiusTopEnd="@dimen/circle_radius"
+            app:boxCornerRadiusTopStart="@dimen/circle_radius"
+            app:boxStrokeColor="@color/colorPrimaryDark"
+            app:boxStrokeWidth="@dimen/stroke_dimen"
+            app:endIconMode="clear_text"
+            app:endIconTint="@color/colorPrimaryDark"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/btnRegresar"
-            app:layout_constraintTop_toBottomOf="@+id/spInconsistencia" />
+            app:layout_constraintStart_toStartOf="@id/guidelineV"
+            app:layout_constraintTop_toBottomOf="@+id/spInconsistencia">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etAlFolio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:textColor="@color/colorPrimaryDark" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnCargar"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+            android:padding="@dimen/common_padding_btn"
+            android:text="@string/cargar"
+            android:textColor="@color/colorPrimary"
+            app:backgroundTint="@color/colorPrimaryDark"
+            app:cornerRadius="@dimen/circle_radius"
+            app:layout_constraintEnd_toEndOf="@+id/guidelineV"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/etDelFolios" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnRegresar"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:padding="@dimen/common_padding_btn"
+            android:text="@string/regresar"
+            android:textColor="@color/colorPrimary"
+            app:backgroundTint="@color/colorPrimaryDark"
+            app:cornerRadius="@dimen/circle_radius"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/guidelineV"
+            app:layout_constraintTop_toBottomOf="@+id/etDelFolios" />
 
         <ImageView
             android:id="@+id/imageView2"

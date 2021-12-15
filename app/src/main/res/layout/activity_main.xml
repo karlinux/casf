@@ -9,20 +9,32 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:context="com.aulaxalapa.casf.MainActivity"
         tools:showIn="@layout/activity_main">
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineH"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.4"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_marginTop="60dp"
+            android:layout_height="90dp"
+            android:layout_marginStart="50dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="50dp"
+            android:layout_marginRight="50dp"
             android:contentDescription="gota"
             android:scaleType="fitCenter"
             android:src="@drawable/gota"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:layout_editor_absoluteX="0dp" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tvCasf"
@@ -46,7 +58,7 @@
             android:layout_marginEnd="60dp"
             android:layout_marginRight="60dp"
             android:gravity="center_horizontal"
-            android:text="COMISIÓN DE AGUA Y SANEAMIENTO DE FORTÍN"
+            android:text="@string/titulo"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -54,56 +66,86 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvCasf" />
 
-        <EditText
-            android:id="@+id/etUsuario"
-            android:layout_width="250dp"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/etUsuarios"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/bordetexto"
-            android:ems="10"
-            android:gravity="center_horizontal"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
             android:hint="@string/usuario"
-            android:inputType="textEmailAddress"
-            android:text="lecturista1@gmail.com"
+            android:textColorHint="@color/colorPrimaryDark"
+            app:boxCornerRadiusBottomEnd="@dimen/circle_radius"
+            app:boxCornerRadiusBottomStart="@dimen/circle_radius"
+            app:boxCornerRadiusTopEnd="@dimen/circle_radius"
+            app:boxCornerRadiusTopStart="@dimen/circle_radius"
+            app:boxStrokeColor="@color/colorPrimaryDark"
+            app:boxStrokeWidth="@dimen/stroke_dimen"
+            app:endIconMode="clear_text"
+            app:endIconTint="@color/colorPrimaryDark"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvTitulo">
+            app:layout_constraintTop_toBottomOf="@+id/guidelineH">
 
-            <requestFocus />
-        </EditText>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etUsuario"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:textColor="@color/colorPrimaryDark" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
-            android:id="@+id/etPassword"
-            android:layout_width="250dp"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/etPasswords"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="40dp"
-            android:background="@drawable/bordetexto"
-            android:ems="10"
-            android:gravity="center_horizontal"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
             android:hint="@string/contrasena"
-            android:inputType="textPassword"
-            android:text="lecturista1"
+            android:textColorHint="@color/colorPrimaryDark"
+            app:boxCornerRadiusBottomEnd="@dimen/circle_radius"
+            app:boxCornerRadiusBottomStart="@dimen/circle_radius"
+            app:boxCornerRadiusTopEnd="@dimen/circle_radius"
+            app:boxCornerRadiusTopStart="@dimen/circle_radius"
+            app:boxStrokeColor="@color/colorPrimaryDark"
+            app:endIconMode="password_toggle"
+            app:endIconTint="@color/colorPrimaryDark"
+            app:helperText="Al menos 8 caracteres"
+            app:helperTextTextColor="@color/colorPrimaryDark"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.502"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etUsuario" />
+            app:layout_constraintTop_toBottomOf="@+id/etUsuarios">
 
-        <Button
-            android:id="@+id/btnRegresar"
-            android:layout_width="250dp"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:textColor="@color/colorPrimaryDark" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnIniciar"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="40dp"
-            android:background="@drawable/borde"
+            android:layout_marginLeft="@dimen/margenbtn"
+            android:layout_marginRight="@dimen/margenbtn"
+            android:layout_marginBottom="40dp"
+            android:padding="@dimen/common_padding_btn"
             android:text="@string/ingresar"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/colorPrimary"
+            app:backgroundTint="@color/colorPrimaryDark"
+            app:cornerRadius="@dimen/circle_radius"
+            app:layout_constraintBottom_toTopOf="@+id/imageView2"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.502"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etPassword"/>
+            app:layout_constraintStart_toStartOf="parent" />
 
         <ImageView
             android:id="@+id/imageView2"

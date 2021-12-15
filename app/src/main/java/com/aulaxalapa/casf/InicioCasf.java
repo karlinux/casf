@@ -25,13 +25,12 @@ import com.aulaxalapa.casf.common.SharedPreferencesManager;
 import com.aulaxalapa.casf.data.Handler_sqlite;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
-import com.aulaxalapa.casf.R;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class BuscarCasf extends AppCompatActivity {
+public class InicioCasf extends AppCompatActivity {
 
     private ListView lista;
     private ArrayList<String> nameList;
@@ -40,6 +39,7 @@ public class BuscarCasf extends AppCompatActivity {
     private Adaptador adaptador;
     private String _ID, guardado, dia;
     private EditText etBuscar;
+    private int pos = 0;
 
 
     @Override
@@ -57,16 +57,22 @@ public class BuscarCasf extends AppCompatActivity {
         final Intent intents = new Intent(this, MainActivity.class);
 
         if(!dia.equals(SharedPreferencesManager.getSomeStringValue(Constantes.PREF_DIA))){
-            SharedPreferencesManager.setSomeStringValue(Constantes.PREF_TOKEN, "");
-            startActivity(intents);
+            Toast.makeText(this, "Descargue universos actualizados", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, UniversosCasf.class);
+            startActivity(intent);
             finish();
         }
         base.abrir();
-        //base.getTablas("SELECT * FROM CASF", "Buscar");
+        base.getTablas("SELECT * FROM "+Constantes.CASF, "Inicio");
+        // base.eliminarCampo("2");
         guardado = base.getGuardado();
         _ID = base.getId(guardado);
         base.cerrar();
         redireccionar();
+
+        Intent msgIntent = new Intent(InicioCasf.this, ServicioCasf.class);
+        msgIntent.putExtra("iteraciones", 10);
+        startService(msgIntent);
 
         FloatingActionButton fab = findViewById(R.id.fab);
         int miColor = getResources().getColor(R.color.colorPrimary);
@@ -110,13 +116,14 @@ public class BuscarCasf extends AppCompatActivity {
                 String id = String.valueOf(GetArrayItems().get(position).getId());
                 String folioCont = String.valueOf(GetArrayItems().get(position).getContenido());
                 SharedPreferencesManager.setSomeStringValue(Constantes.PREF_ID, id);
+                SharedPreferencesManager.setSomeIntValue(Constantes.PREF_POSICION, position);
                 SharedPreferencesManager.setSomeStringValue(Constantes.PREF_FOLIOCONT, folioCont);
                 SharedPreferencesManager.setSomeStringValue(Constantes.PREF_IDE, ide);
                 Intent intent = new Intent(getApplicationContext(), LecturaCasf.class);
                 startActivity(intent);
                 finish();
                 }else{
-                    Toast.makeText(BuscarCasf.this, "LOS REGISTROS SINCRONIZADOS NO SE PUEDEN ACTUALIZAR", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(InicioCasf.this, "LOS REGISTROS SINCRONIZADOS NO SE PUEDEN ACTUALIZAR", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -141,8 +148,13 @@ public class BuscarCasf extends AppCompatActivity {
     }
 
     private void productos() {
+        pos = SharedPreferencesManager.getSomeIntValue(Constantes.PREF_POSICION);
+
         adaptador = new Adaptador(this, GetArrayItems());
         lista.setAdapter(adaptador);
+        if(pos!=0){
+            lista.setSelection(pos);
+        }
     }
 
     private void redireccionar() {

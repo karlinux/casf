@@ -24,7 +24,6 @@ import com.aulaxalapa.casf.common.SharedPreferencesManager;
 import com.aulaxalapa.casf.data.Handler_sqlite;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.aulaxalapa.casf.R;
 
 import java.io.File;
 import java.io.IOException;
@@ -64,7 +63,7 @@ public class FotoIncoCasf extends AppCompatActivity {
         _ID = base.getId("2");
         base.cerrar();
 
-        imgBtnIniciar = findViewById(R.id.btnRegresar);
+        imgBtnIniciar = findViewById(R.id.btnCargar);
         imgBtnFoto = findViewById(R.id.imgBtnFoto);
         tvUsuario = findViewById(R.id.tvUsuario);
         String usuario = SharedPreferencesManager.getSomeStringValue(Constantes.PREF_NOMBRE);

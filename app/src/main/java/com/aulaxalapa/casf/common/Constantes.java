@@ -2,7 +2,9 @@ package com.aulaxalapa.casf.common;
 
 public class Constantes {
 
-    public static final String API_RUTA_BASE_URL = "https://tecnisoserver.com/";
+    //public static final String API_RUTA_BASE_URL = "https://tecnisoserver.com/";
+    public static final String API_RUTA_BASE_URL = "https://radverr.com/";
+    //public static final String API_RUTA_BASE_URL = "http://192.168.1.115/";
 
     //preferencias
     public static final String PREF_TOKEN = "PREF_TOKEN";
@@ -11,14 +13,17 @@ public class Constantes {
     public static final String PREF_IDUSU = "PREF_IDUSU";
     public static final String PREF_CARGA = "PREF_CARGA";
     public static final String PREF_ID = "PREF_ID";
+    public static final String PREF_POSICION = "PREF_POSICION";
     public static final String PREF_FOLIOCONT = "PREF_FOLIOCONT";
     public static final String PREF_DIA = "PREF_DIA";
     public static final String PREF_IDE = "PREF_IDE";
+    public static final String VERSION = "7";
 
     //TABLAS
     public static final String CASF = "CASF";
     public static final String IMAGENES = "IMAGENES";
     public static final String UNIVERSOS = "UNIVERSOS";
+    public static final String CARPETA = "/CASF/";
 
     //CAMPOS
     public static final String FECHA = "FECHA";

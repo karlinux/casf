@@ -44,24 +44,21 @@ public interface CasfService {
     @GET("production/accesar/sectores.php")
     Call<List<ResponseSector>> obtenerSector( );
 
-    // Petición de login
+    // Gps
     @POST("casf/gps.php")
     Call<ResponseGps> subirGps(@Body RequestGps requestGps);
 
-    // Petición de login
+    // Petición de Insertar
     @POST("production/apk/in.php")
-    //@POST("casf/insertar.php")
     Call<ResponseInsert> subirDatos(@Body RequestInsert requestInsert);
 
     //
     @Multipart
     @POST("production/images/lecturas.php")
-    //@POST("casf/lecturas.php")
     Call<ResponseFoto> subirLectura(@Part MultipartBody.Part file);
 
     @Multipart
     @POST("production/images/inconsistencia.php")
-    //@POST("casf/inconsistencia.php")
     Call<ResponseFoto> subirInconsistencia(@Part MultipartBody.Part file);
 
 

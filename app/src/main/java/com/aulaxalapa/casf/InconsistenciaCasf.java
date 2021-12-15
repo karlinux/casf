@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,11 +17,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.aulaxalapa.casf.common.Constantes;
 import com.aulaxalapa.casf.common.SharedPreferencesManager;
 import com.aulaxalapa.casf.data.Handler_sqlite;
-import com.aulaxalapa.casf.R;
+import com.google.android.material.button.MaterialButton;
 
 public class InconsistenciaCasf extends AppCompatActivity {
 
-    private Button btnSiguiente, btnFinalizar;
+    private MaterialButton btnSiguiente, btnFinalizar;
     private TextView tvUsuario, tvDatos;
     private Handler_sqlite base;
     private String folioCont, guardado, _ID, selecInconsistencia;
@@ -48,7 +47,6 @@ public class InconsistenciaCasf extends AppCompatActivity {
                 " " + c.getString(4) +
                 "\n" + c.getString(5) + " " + c.getString(6) +
                 "\nMedidor: " + c.getString(12));
-        base.getTablas("SELECT * FROM " + Constantes.CASF, "GPS");
         _ID = base.getId( guardado );
         base.cerrar();
 
@@ -57,8 +55,8 @@ public class InconsistenciaCasf extends AppCompatActivity {
             startActivity(intent);
             finish();
         }
-        btnSiguiente = findViewById(R.id.btnRegresar);
-        btnFinalizar = findViewById(R.id.btnFinalizar);
+        btnSiguiente = findViewById(R.id.btnCargar);
+        btnFinalizar = findViewById(R.id.btnRegresar);
 
         tvUsuario = findViewById(R.id.tvUsuario);
         String usuario = SharedPreferencesManager.getSomeStringValue(Constantes.PREF_NOMBRE);
@@ -117,7 +115,7 @@ public class InconsistenciaCasf extends AppCompatActivity {
                 base.setGuardado(_ID, "0");
                 base.setEstado(_ID);
                 base.cerrar();
-                Intent intent = new Intent(getApplicationContext(), BuscarCasf.class);
+                Intent intent = new Intent(getApplicationContext(), InicioCasf.class);
                 startActivity(intent);
                 finish();
             }

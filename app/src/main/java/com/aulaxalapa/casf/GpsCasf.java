@@ -22,7 +22,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.aulaxalapa.casf.common.Constantes;
 import com.aulaxalapa.casf.common.SharedPreferencesManager;
 import com.aulaxalapa.casf.data.Handler_sqlite;
-import com.aulaxalapa.casf.R;
 
 public class GpsCasf extends AppCompatActivity implements LocationListener {
 
@@ -53,12 +52,10 @@ public class GpsCasf extends AppCompatActivity implements LocationListener {
                 " " + c.getString(4) +
                 "\n" + c.getString(5) + " " + c.getString(6) +
                 "\nMedidor: " + c.getString(12));
-
-        base.getTablas("SELECT * FROM CASF", "GPS");
         base.cerrar();
 
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-        btnRegistrar = findViewById(R.id.btnRegresar);
+        btnRegistrar = findViewById(R.id.btnCargar);
         etLatitud = findViewById(R.id.etClave);
         etLongitud = findViewById(R.id.etLongitud);
         tvUsuario = findViewById(R.id.tvUsuario);

@@ -63,7 +63,6 @@ public class DataRepository {
                 if(response.isSuccessful()){
                     //String uid = response.body().getNombreOriginal();
                     //base.setEstado( uid, Constantes.IMAGEN, "0", Constantes.IMAGENES );
-                    Log.e(TAG, "onResponse: " + response.body().getNombreOriginal() );
                 }else {
                     Toast.makeText(MyApp.getContext(), "Hubo problemas para conectarse a internet", Toast.LENGTH_SHORT).show();
                 }
@@ -71,7 +70,6 @@ public class DataRepository {
             @Override
             public void onFailure(Call<ResponseFoto> call, Throwable t) {
                     Toast.makeText(MyApp.getContext(), "Error en la conexión"+ t.getMessage(), Toast.LENGTH_SHORT).show();
-                Log.e(TAG, "onFailure: " + t.getMessage() );
             }
         });
     }
@@ -85,7 +83,6 @@ public class DataRepository {
             public void onResponse(Call<ResponseGps> call, Response<ResponseGps> response) {
                 if(response.isSuccessful()){
                     String uid = response.body().getId();
-                    //base.setEstado( uid, "_ID", response.body().getId(), Constantes.CASF);
                 }else {
                     Toast.makeText(MyApp.getContext(), "Hubo problemas para conectarse a internet", Toast.LENGTH_SHORT).show();
                 }
@@ -93,14 +90,13 @@ public class DataRepository {
             @Override
             public void onFailure(Call<ResponseGps> call, Throwable t) {
                 Toast.makeText(MyApp.getContext(), "Error en la conexión"+ t.getMessage(), Toast.LENGTH_SHORT).show();
-                Log.e(TAG, "onFailure: " + t.getMessage() );
             }
         });
     }
 
-    public void obtenerUniversos( String ruta , String sector ){
+    public void obtenerUniversos( String ruta , String sector, int delFolio, int alFolio ){
 
-        RequestUniverso requestUniverso = new RequestUniverso( ruta, sector );
+        RequestUniverso requestUniverso = new RequestUniverso( ruta, sector, delFolio, alFolio );
         Log.e(TAG, "obtenerUniversos: " +requestUniverso.getSector() );
         Call<List<ResponseUniverso>> call = casfService.obtenerUniversos(requestUniverso);
         call.enqueue(new Callback<List<ResponseUniverso>>() {

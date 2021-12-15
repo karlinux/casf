@@ -11,8 +11,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Environment;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.aulaxalapa.casf.common.Constantes;
@@ -21,7 +19,8 @@ import com.aulaxalapa.casf.retrofit.CasfClient;
 import com.aulaxalapa.casf.retrofit.CasfService;
 import com.aulaxalapa.casf.retrofit.request.RequestLogin;
 import com.aulaxalapa.casf.retrofit.response.ResponseAuth;
-import com.aulaxalapa.casf.R;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputEditText;
 
 import java.io.File;
 
@@ -36,9 +35,10 @@ public class MainActivity extends AppCompatActivity {
     private static final int ACCESS_FINE_LOCATION = 9;
     private static final int CAMERA_PERMISSION = 8;
 
-    private Button btnIniciar;
+    private MaterialButton btnIniciar;
+    private TextInputEditText etUsuario, etPassword;
     private String TAG = "MainActivity";
-    private EditText etUsuario, etPassword;
+    private String correo;
     CasfClient casfClient;
     CasfService casfService;
 
@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
         //Intent msgIntent = new Intent(MainActivity.this, ServicioCasf.class);
         //msgIntent.putExtra("iteraciones", 10);
         //startService(msgIntent);
+        permisos();
 
         File directory = new File(Environment.getExternalStorageDirectory() + "/CASF" );
         boolean bool = directory.exists();
@@ -56,16 +57,19 @@ public class MainActivity extends AppCompatActivity {
             directory.mkdirs();
         }
 
-        permisos();
-
         String token = "";
         token = SharedPreferencesManager.getSomeStringValue(Constantes.PREF_TOKEN);
         if( token != null) {
             if (!token.equals("")) {
-                Intent intent = new Intent(getApplicationContext(), BuscarCasf.class);
+                Intent intent = new Intent(getApplicationContext(), InicioCasf.class);
                 startActivity(intent);
                 finish();
             }
+        }
+        if(SharedPreferencesManager.getSomeStringValue(Constantes.PREF_CORREO)!=null){
+            correo = SharedPreferencesManager.getSomeStringValue(Constantes.PREF_CORREO);
+        }else{
+            correo="";
         }
 
         casfClient = new CasfClient();
@@ -73,7 +77,8 @@ public class MainActivity extends AppCompatActivity {
 
         etUsuario = findViewById(R.id.etUsuario);
         etPassword = findViewById(R.id.etPassword);
-        btnIniciar = findViewById(R.id.btnRegresar);
+        btnIniciar = findViewById(R.id.btnIniciar);
+        etUsuario.setText(correo);
 
         btnIniciar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -124,17 +129,20 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<ResponseAuth> call, Response<ResponseAuth> response) {
                 if(response.isSuccessful()){
 
-                    Toast.makeText(getApplicationContext(), "Sesión iniciada correctamente", Toast.LENGTH_SHORT).show();
+                    if(!response.body().getToken().equals("")){
+                        Toast.makeText(getApplicationContext(), "Sesión iniciada correctamente", Toast.LENGTH_SHORT).show();
+                        Log.e(TAG, "onResponse: " + response.body().getToken() );
+                        SharedPreferencesManager.setSomeStringValue(Constantes.PREF_TOKEN, response.body().getToken());
+                        SharedPreferencesManager.setSomeStringValue(Constantes.PREF_NOMBRE, response.body().getNombre());
+                        SharedPreferencesManager.setSomeStringValue(Constantes.PREF_CORREO, response.body().getEmail());
+                        SharedPreferencesManager.setSomeStringValue(Constantes.PREF_IDUSU, response.body().getIdUsuario());
+                        Intent intent = new Intent(getApplicationContext(), UniversosCasf.class);
+                        startActivity(intent);
+                        finish();
+                    }else{
+                        Toast.makeText(getApplicationContext(), "Error de usuario o contraseña", Toast.LENGTH_SHORT).show();
+                    }
 
-                    Log.e(TAG, "onResponse: " + response.body().getToken() );
-                    SharedPreferencesManager.setSomeStringValue(Constantes.PREF_TOKEN, response.body().getToken());
-                    SharedPreferencesManager.setSomeStringValue(Constantes.PREF_NOMBRE, response.body().getNombre());
-                    SharedPreferencesManager.setSomeStringValue(Constantes.PREF_CORREO, response.body().getEmail());
-                    SharedPreferencesManager.setSomeStringValue(Constantes.PREF_IDUSU, response.body().getIdUsuario());
-
-                    Intent intent = new Intent(getApplicationContext(), UniversosCasf.class);
-                    startActivity(intent);
-                    finish();
                 } else {
                     Toast.makeText(getApplicationContext(), "Error de usuario o contraseña" + response.toString(), Toast.LENGTH_SHORT).show();
                 }
